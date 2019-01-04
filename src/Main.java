@@ -8,32 +8,24 @@ public class Main {
         LoadImages images = new LoadImages();
 
         MazeReader smallMazeReader = new MazeReader(images.getSmallMaze());
-        System.out.println("Small maze: ");
-        try {
-            System.out.println(smallMazeReader.isEmpty(2, 2));
-        } catch (WrongCoordinatesException e) {
-            e.printStackTrace();
-        }
-        System.out.println(smallMazeReader.isWall(5, 6));
-        System.out.println(smallMazeReader.isStop(2, 6));
-        System.out.println(smallMazeReader.isStop(2, 8));
-        System.out.println(smallMazeReader.isStart(18, 6));
-        System.out.println(smallMazeReader.isStart(4, 4));
-
-        MazeReader mediumMazeReader = new MazeReader(images.getMediumMaze());
-        System.out.println("Medium maze: ");
-        System.out.println(mediumMazeReader.isStart(4, 4));
-        try {
-            System.out.println(mediumMazeReader.isEmpty(10, 9));
-        } catch (WrongCoordinatesException e) {
-            e.printStackTrace();
-        }
-
-        MazeReader bigMazeReader = new MazeReader(images.getBigMaze());
 
         Graphics2D smallMazeGraphics2D = (images.getSmallMaze()).createGraphics();
 
         MazeWriter mazeWriter = new MazeWriter();
+
+        int[][] map = new int[21][21];
+        boolean[][] visited = new boolean[21][21];
+        for(int i = 0; i < 21; i++) {
+            for(int j = 0; j < 21; j++) {
+                visited[i][j] = false;
+            }
+        }
+        int[] start = smallMazeReader.getStart();
+        int[] stop = smallMazeReader.getStop();
+
+        PathFinder pathFinder = new PathFinder(smallMazeReader);
+        System.out.println(pathFinder.findPath(map, visited, start, stop));
+
         try {
             mazeWriter.drawStep(smallMazeGraphics2D, 49, 49, 49, 21);
             mazeWriter.drawStep(smallMazeGraphics2D, 49, 21, 21, 21);
@@ -48,7 +40,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        PathFinder pathFinder = new PathFinder(smallMazeGraphics2D, smallMazeReader.getStartNode(), smallMazeReader.getEndNode());
+        System.out.println(pathFinder.getPath());
 
     }
 }

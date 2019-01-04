@@ -1,7 +1,5 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MazeReader {
     public static final String BLACK = "#000000";
@@ -9,16 +7,15 @@ public class MazeReader {
     public static final String RED = "#ff0000";
     public static final String GREEN = "#00ff00";
     private String[][] arrayOfColors;
-    private List<Node> nodes;
-    private Node startNode;
-    private Node endNode;
+    int[] start;
+    int[] stop;
 
-    public Node getStartNode() {
-        return startNode;
+    public int[] getStart() {
+        return start;
     }
 
-    public Node getEndNode() {
-        return endNode;
+    public int[] getStop() {
+        return stop;
     }
 
     public MazeReader(BufferedImage maze) {
@@ -26,9 +23,10 @@ public class MazeReader {
         int numberOfVerticalFields = maze.getHeight() / pixelLength;
         int numberOfHorizontalFields = maze.getWidth() / pixelLength;
         System.out.println(numberOfVerticalFields + ", " + numberOfHorizontalFields);
+        this.start = new int[2];
+        this.stop = new int[2];
 
         this.arrayOfColors = new String[numberOfHorizontalFields][numberOfVerticalFields];
-        this.nodes = new ArrayList<>();
 
         int horizontalCounter = 1, verticalCounter = 1;
         for (int i = 0; i < numberOfHorizontalFields; i++) {
@@ -37,44 +35,40 @@ public class MazeReader {
                 Color color = new Color(clr, true);
                 arrayOfColors[i][j] = String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
 
-                if(arrayOfColors[i][j].equals(BLACK)) nodes.add(new Node(i, j, 'B'));
-                if(arrayOfColors[i][j].equals(WHITE)) nodes.add(new Node(i, j, 'W'));
-                if(arrayOfColors[i][j].equals(RED)) {
-                    Node tmp = new Node(i, j, 'R');
-                    nodes.add(tmp);
-                    this.startNode = tmp;
-                }
-                if(arrayOfColors[i][j].equals(GREEN)) {
-                    Node tmp = new Node(i, j, 'G');
-                    nodes.add(tmp);
-                    this.endNode = tmp;
+                if (arrayOfColors[i][j].equals(RED)) {
+                    this.start[0] = i;
+                    this.start[1] = j;
                 }
 
-                verticalCounter += pixelLength;
+                if (arrayOfColors[i][j].equals(GREEN)) {
+                    this.stop[0] = i;
+                    this.stop[1] = j;
+                }
+
+                    verticalCounter += pixelLength;
+                }
+                horizontalCounter += pixelLength;
+                verticalCounter = 1;
             }
-            horizontalCounter += pixelLength;
-            verticalCounter = 1;
         }
-    }
 
-    public boolean isEmpty(int x, int y) throws WrongCoordinatesException{
-        if (x > arrayOfColors.length || y > arrayOfColors.length) throw new WrongCoordinatesException();
-        if (arrayOfColors[x-1][y-1].equals(WHITE)) return true;
+    public boolean isEmpty(int x, int y) {
+        if (arrayOfColors[x][y].equals(WHITE)) return true;
         else return false;
     }
 
     public boolean isWall(int x, int y) {
-        if (arrayOfColors[x-1][y-1].equals(BLACK)) return true;
+        if (arrayOfColors[x][y].equals(BLACK)) return true;
         else return false;
     }
 
     public boolean isStart(int x, int y) {
-        if (arrayOfColors[x-1][y-1].equals(RED)) return true;
+        if (arrayOfColors[x][y].equals(RED)) return true;
         else return false;
     }
 
     public boolean isStop(int x, int y) {
-        if(arrayOfColors[x-1][y-1].equals(GREEN)) return true;
+        if(arrayOfColors[x][y].equals(GREEN)) return true;
         else return false;
     }
 }
