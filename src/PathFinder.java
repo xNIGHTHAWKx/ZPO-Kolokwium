@@ -14,33 +14,24 @@ public class PathFinder {
         this.path = new ArrayList<>();
     }
 
-    public boolean findPath(int[][] map, boolean[][] visited, int[] current, int[] end) {
+    public boolean findPath(boolean[][] visited, int[] current) {
         int x = current[0];
         int y = current[1];
-        visited[current[0]][current[1]] = true;
 
-        if(current[0] == end[0] && current[1] == end[1]) return true;
+        Node node = new Node(x, y);
 
-        if(visited[current[0]+1][current[1]] == false) {
-            if (!mazeReader.isWall(current[0] + 1, current[1]))
-                findPath(map, visited, new int[]{x + 1, y}, end);
-        }
+        if(visited[x][y]) return false;
+        visited[x][y] = true;
+        if(mazeReader.isStop(x, y)) return true;
+        if(mazeReader.isWall(x, y)) return false;
+        path.add(node);
 
-        if(visited[current[0]-1][current[1]] == false) {
-            if (!mazeReader.isWall(current[0] - 1, current[1]))
-                findPath(map, visited, new int[]{x - 1, y}, end);
-        }
+        if(findPath(visited, new int[]{x + 1, y}) == true) return true;
+        if(findPath(visited, new int[]{x - 1, y}) == true) return true;
+        if(findPath(visited, new int[]{x, y + 1}) == true) return true;
+        if(findPath(visited, new int[]{x, y - 1}) == true) return true;
 
-        if(visited[current[0]][current[1]+1] == false) {
-            if (!mazeReader.isWall(current[0], current[1] + 1))
-                findPath(map, visited, new int[]{x, y + 1}, end);
-        }
-
-        if(visited[current[0]][current[1]-1] == false) {
-            if (!mazeReader.isWall(current[0], current[1] - 1))
-                findPath(map, visited, new int[]{x, y - 1}, end);
-        }
-
+        path.remove(node);
         return false;
     }
 }

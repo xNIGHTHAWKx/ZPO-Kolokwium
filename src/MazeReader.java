@@ -8,23 +8,16 @@ public class MazeReader {
     public static final String GREEN = "#00ff00";
     private String[][] arrayOfColors;
     int[] start;
-    int[] stop;
 
     public int[] getStart() {
         return start;
-    }
-
-    public int[] getStop() {
-        return stop;
     }
 
     public MazeReader(BufferedImage maze) {
         int pixelLength = 14;
         int numberOfVerticalFields = maze.getHeight() / pixelLength;
         int numberOfHorizontalFields = maze.getWidth() / pixelLength;
-        System.out.println(numberOfVerticalFields + ", " + numberOfHorizontalFields);
         this.start = new int[2];
-        this.stop = new int[2];
 
         this.arrayOfColors = new String[numberOfHorizontalFields][numberOfVerticalFields];
 
@@ -38,11 +31,6 @@ public class MazeReader {
                 if (arrayOfColors[i][j].equals(RED)) {
                     this.start[0] = i;
                     this.start[1] = j;
-                }
-
-                if (arrayOfColors[i][j].equals(GREEN)) {
-                    this.stop[0] = i;
-                    this.stop[1] = j;
                 }
 
                     verticalCounter += pixelLength;

@@ -1,6 +1,4 @@
 import javax.imageio.ImageIO;
-import javax.swing.text.Style;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -42,16 +40,6 @@ public class LoadImages {
         try {
             BufferedImage bigMaze = ImageIO.read(file);
             this.bigMaze = bigMaze;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Graphics2D graphics2D = smallMaze.createGraphics();
-        graphics2D.setColor(Color.BLACK);
-        graphics2D.drawLine(49, 49, 49, 21);
-
-        try {
-            ImageIO.write(smallMaze, "png", new File("images/modified.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

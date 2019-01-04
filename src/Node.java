@@ -17,6 +17,6 @@ public class Node {
 
     @Override
     public String toString() {
-        return "[" + this.x + "," + this.y + "]" + "\n";
+        return "[" + this.x + "," + this.y + "]";
     }
 }
