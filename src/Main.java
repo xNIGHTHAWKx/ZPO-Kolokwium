@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         LoadImages images = new LoadImages();
 
-        System.out.println("Wybierz, którego labiryntu scieżkę chcesz otrzymać(1.21x21/2.31x31/3.51x51");
+        System.out.println("Wybierz, którego labiryntu scieżkę chcesz otrzymać(1.21x21/2.31x31/3.51x51)");
         Scanner input = new Scanner(System.in);
         int menu = input.nextInt();
         MazeReader mazeReader = null;
