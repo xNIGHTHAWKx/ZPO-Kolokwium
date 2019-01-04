@@ -10,6 +10,18 @@ public class LoadImages {
     private BufferedImage mediumMaze;
     private BufferedImage bigMaze;
 
+    public BufferedImage getSmallMaze() {
+        return this.smallMaze;
+    }
+
+    public BufferedImage getMediumMaze() {
+        return this.mediumMaze;
+    }
+
+    public BufferedImage getBigMaze() {
+        return this.bigMaze;
+    }
+
     public LoadImages() {
         File file = new File("images/map_21x21.png");
         try {
@@ -33,22 +45,6 @@ public class LoadImages {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        MazeReader mazeReader = new MazeReader(smallMaze);
-
-        System.out.println("Small maze: ");
-        System.out.println(mazeReader.isEmpty(2, 2));
-        System.out.println(mazeReader.isWall(5, 6));
-        System.out.println(mazeReader.isStop(2, 6));
-        System.out.println(mazeReader.isStop(2, 8));
-        System.out.println(mazeReader.isStart(18, 6));
-        System.out.println(mazeReader.isStart(4, 4));
-
-        MazeReader mazeReader2 = new MazeReader(mediumMaze);
-
-        System.out.println("Medium maze: ");
-        System.out.println(mazeReader2.isStart(4, 4));
-        System.out.println(mazeReader2.isEmpty(10, 9));
 
         Graphics2D graphics2D = smallMaze.createGraphics();
         graphics2D.setColor(Color.BLACK);
